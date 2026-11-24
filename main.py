@@ -5,11 +5,21 @@
 
 import os
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import pandas as pd
 import joblib
 
 app = FastAPI()
+
+# Enable CORS for live frontend integration
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # uvicorn main:app --reload
 model_path = "logisticmodel.pkl" if os.path.exists("logisticmodel.pkl") else "logisticrmodel.pkl"
